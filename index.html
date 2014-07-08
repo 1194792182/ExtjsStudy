@@ -8,14 +8,14 @@
 <!-- InstanceBeginEditable name="ReferenceCss" -->
 
 <!-- InstanceEndEditable -->
-<link rel="stylesheet" type="text/css" href="/Js/resources/css/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="/Content/resources/css/ext-all.css" />
 <!-- InstanceBeginEditable name="LocalCss" -->
 <style type="text/css">
 
 </style>
 <!-- InstanceEndEditable -->
-<script type="text/javascript" src="/Js/bootstrap.js"></script>
-<script type="text/javascript" src="/Js/locale/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/Content/bootstrap.js"></script>
+<script type="text/javascript" src="/Content/locale/ext-lang-zh_CN.js"></script>
 <!-- InstanceBeginEditable name="ReferenceScript" -->
 
 <!-- InstanceEndEditable -->
@@ -29,16 +29,41 @@ if(Ext.BLANK_IMAGE_URL.substr(0,4)!="data"){
 <!-- InstanceBeginEditable name="LocalScript" -->
 <script type="text/javascript">
 Ext.onReady(function(){
-new Ext.Viewport({
-	layout:'fit',
-	items:[
+	new Ext.Viewport({
+		layout:'fit',
+		items:[
+			{
+				xtype:"panel",
+				title:"欢迎",
+				html:"<h1 style='text-align:center; font-size:60px;font-weight:bold;'>Hello World</h1>"
+			}
+		]
+	});
+	
+	Ext.define("Calculator",{
+		constructor:function(){ return this;},
+		plus:function(v1,v2){return v1+v2;},
+		minus:function(v1,v2){return v1-v2;},
+		multiply:function(v1,v2){return v1*v2;},
+		divid:function(v1,v2){return v1/v2;},
+	});
+	var cal=new Calculator();
+	console.log(cal.plus(87,28));
+	console.log(cal.minus(87,28));
+	console.log(cal.multiply(7,8));
+	console.log(cal.divid(28,7));
+	
+	Ext.define('NewCalculator',
+	{
+		extend:'Calculator',
+		hex:function(v1)
 		{
-			xtype:"panel",
-			title:"欢迎",
-			html:"<h1 style='text-align:center; font-size:60px;font-weight:bold;'>Hello World</h1>"
+			return v1.toString(16);
 		}
-	]
-});
+	});
+	var ncal=new NewCalculator();
+	console.log(ncal.hex(28));
+	
 });
 </script>
 <!-- InstanceEndEditable -->
