@@ -1,23 +1,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/Base.dwt" codeOutsideHTMLIsLocked="false" -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- InstanceBegin template="/Templates/Base.dwt" codeOutsideHTMLIsLocked="false" -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!-- InstanceBeginEditable name="doctitle" -->
 <title></title>
 <!-- InstanceEndEditable -->
 <!-- InstanceBeginEditable name="ReferenceCss" -->
-
 <!-- InstanceEndEditable -->
 <link rel="stylesheet" type="text/css" href="/Content/resources/css/ext-all.css" />
 <!-- InstanceBeginEditable name="LocalCss" -->
-<style type="text/css">
-
-</style>
+<style type="text/css"></style>
 <!-- InstanceEndEditable -->
 <script type="text/javascript" src="/Content/bootstrap.js"></script>
 <script type="text/javascript" src="/Content/locale/ext-lang-zh_CN.js"></script>
 <!-- InstanceBeginEditable name="ReferenceScript" -->
-
 <!-- InstanceEndEditable -->
 <script type="text/javascript">
 Ext.onReady(function(){
@@ -47,11 +44,11 @@ Ext.onReady(function(){
 		multiply:function(v1,v2){return v1*v2;},
 		divid:function(v1,v2){return v1/v2;},
 	});
-	var cal=new Calculator();
+	/*var cal=new Calculator();
 	console.log(cal.plus(87,28));
 	console.log(cal.minus(87,28));
 	console.log(cal.multiply(7,8));
-	console.log(cal.divid(28,7));
+	console.log(cal.divid(28,7));*/
 	
 	Ext.define('NewCalculator',
 	{
@@ -61,18 +58,106 @@ Ext.onReady(function(){
 			return v1.toString(16);
 		}
 	});
-	var ncal=new NewCalculator();
-	console.log(ncal.hex(28));
+	/*var ncal=new NewCalculator();
+	console.log(ncal.hex(28));*/
 	
+	Ext.define('HEX',
+	{
+		hex:function(v){
+			return v.toString(16);
+		}
+	});
+	
+	Ext.define('BIN',
+	{
+		bin:function(v){
+			return v.toString(2);
+		}
+	});
+	
+	Ext.define('OCT',
+	{
+		oct:function(v){
+			return v.toString(8);
+		}
+	});
+	
+	Ext.define('NewCalculator2',
+	{
+		extend:'Calculator',
+		mixins:{Hex:'HEX',Bin:'BIN',Oct:'OCT'},
+		convert:function(value,type){
+				switch(type)
+				{
+					case 2:
+					return this.bin(value);
+					break;
+					case 8:
+					return this.oct(value);
+					break;
+					default:
+					return this.mixins.Hex.hex.call(this,value);
+					break;
+				}
+			}
+	});
+	/*var ncal=new NewCalculator2();
+	console.log(ncal.convert(25,2));
+	console.log(ncal.convert(25,8));
+	console.log(ncal.convert(25,16));*/
+	
+	
+	Ext.define("Convert",{
+		config:{
+			type:"hex"
+		},
+		type_num:16,
+		constructor:function(config){
+			this.initConfig(config);
+			return this;
+		},
+		applyType:function(type){
+			this.type_num=type=="hex"?16:(type=="oct"?8:2);
+		},
+		convert:function(v){
+			return v.toString(this.type_num);
+		}
+	});
+	/*var cv=new Convert();
+	console.log(cv.convert(29));
+	cv.setType("oct");
+	console.log(cv.convert(29));
+	cv.setType("bin");
+	console.log(cv.convert(29));*/
+	
+	
+	Ext.define("Convert2",{
+		statics:{
+			hex:function(v){
+				return v.toString(16);	
+			},
+			oct:function(v){
+				return v.toString(8);	
+			},
+			bin:function(v){
+				return v.toString(2);
+			}
+		},
+		constructor:function(){
+			return this;
+		}
+	});
+	
+	console.log(Convert2.hex(29));
+	console.log(Convert2.oct(29));
+	console.log(Convert2.bin(29));
 });
 </script>
 <!-- InstanceEndEditable -->
-
 </head>
 
 <body>
-<!-- InstanceBeginEditable name="Html" -->
-
-<!-- InstanceEndEditable -->
+<!-- InstanceBeginEditable name="Html" --> <!-- InstanceEndEditable -->
 </body>
-<!-- InstanceEnd --></html>
+<!-- InstanceEnd -->
+</html>
